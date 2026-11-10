@@ -1,5 +1,7 @@
 """Liczenie kosztu energii dla urzadzen pracujacych w trybie ciaglym."""
 
+from typing import Iterable
+
 GODZIN_W_ROKU = 24 * 365
 
 
@@ -11,3 +13,13 @@ def zuzycie_roczne_kwh(moc_w: float) -> float:
 def koszt_roczny(moc_w: float, cena_kwh: float) -> float:
     """Roczny koszt pracy urzadzenia w zlotowkach."""
     return zuzycie_roczne_kwh(moc_w) * cena_kwh
+
+
+def moc_lacznie_w(urzadzenia: Iterable) -> float:
+    """Suma mocy wszystkich urzadzen, z uwzglednieniem liczby sztuk."""
+    return sum(u.moc_lacznie_w for u in urzadzenia)
+
+
+def koszt_lacznie(urzadzenia: Iterable, cena_kwh: float) -> float:
+    """Roczny koszt pracy calego zestawu urzadzen."""
+    return koszt_roczny(moc_lacznie_w(urzadzenia), cena_kwh)
